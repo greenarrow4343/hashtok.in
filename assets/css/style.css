@@ -8,9 +8,12 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-body {
+body,html {
   font-family: 'Roboto', sans-serif;
   color: #444444;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 a {
@@ -257,7 +260,7 @@ h1, h2, h3, h4, h5, h6 {
   background: #e2e5fe;
   color: #3b4ef8;
   border-radius: 5px;
-  padding: 8px 25px 10px 25px;
+  padding: 6px 8px;
   white-space: nowrap;
   transition: 0.3s;
   font-size: 14px;
@@ -275,7 +278,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .get-started-btn {
     margin: 0 48px 0 0;
-    padding: 6px 18px;
+    padding: 6px 8px;
   }
 }
 
@@ -391,14 +394,13 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 100vh;
   background: white;
   border-bottom: 2px solid white;
   text-align: center;
 }
 
 #hero .container {
-  padding-top: 150px;
+  min-height: 100vh;
 }
 
 #hero h1 {
@@ -462,6 +464,7 @@ h1, h2, h3, h4, h5, h6 {
 section {
   padding: 60px 0;
   overflow: hidden;
+  min-height: 100vh;
 }
 
 .section-bg {
@@ -523,7 +526,7 @@ section {
   margin-bottom: 30px;
 }
 
-.about .content .about-btn {
+.about .content .contact-btn {
   display: inline-block;
   background: rgba(255, 255, 255, 0.05);
   padding: 6px 30px 8px 30px;
@@ -532,11 +535,11 @@ section {
   transition: 0.3s;
 }
 
-.about .content .about-btn i {
+.about .content .contact-btn i {
   font-size: 14px;
 }
 
-.about .content .about-btn:hover {
+.about .content .contact-btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -1195,6 +1198,10 @@ section {
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
+#contact {
+  min-height: 100%;
+}
+
 .contact .info-box {
   color: #2d405f;
   text-align: center;
@@ -1223,13 +1230,13 @@ section {
   margin-bottom: 0;
 }
 
-.contact .php-email-form {
+.contact .prospect-form {
   box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
   padding: 30px;
   background: #fff;
 }
 
-.contact .php-email-form .validate {
+.contact .prospect-form .validate {
   display: none;
   color: red;
   margin: 0 0 15px 0;
@@ -1237,7 +1244,7 @@ section {
   font-size: 13px;
 }
 
-.contact .php-email-form .error-message {
+.contact .prospect-form .error-message {
   display: none;
   color: #fff;
   background: #ed3c0d;
@@ -1246,11 +1253,11 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .error-message br + br {
+.contact .prospect-form .error-message br + br {
   margin-top: 25px;
 }
 
-.contact .php-email-form .sent-message {
+.contact .prospect-form .sent-message {
   display: none;
   color: #fff;
   background: #18d26e;
@@ -1259,14 +1266,14 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .loading {
+.contact .prospect-form .loading {
   display: none;
   background: #fff;
   text-align: center;
   padding: 15px;
 }
 
-.contact .php-email-form .loading:before {
+.contact .prospect-form .loading:before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -1279,25 +1286,25 @@ section {
   animation: animate-loading 1s linear infinite;
 }
 
-.contact .php-email-form input, .contact .php-email-form textarea {
+.contact .prospect-form input, .contact .prospect-form textarea {
   border-radius: 5px;
   box-shadow: none;
   font-size: 14px;
 }
 
-.contact .php-email-form input:focus, .contact .php-email-form textarea:focus {
+.contact .prospect-form input:focus, .contact .prospect-form textarea:focus {
   border-color: #8ea5ca;
 }
 
-.contact .php-email-form input {
+.contact .prospect-form input {
   padding: 20px 15px;
 }
 
-.contact .php-email-form textarea {
+.contact .prospect-form textarea {
   padding: 12px 15px;
 }
 
-.contact .php-email-form button[type="submit"] {
+.contact .prospect-form button[type="submit"] {
   background: #3b4ef8;
   border: 0;
   padding: 10px 24px;
@@ -1306,7 +1313,7 @@ section {
   border-radius: 5px;
 }
 
-.contact .php-email-form button[type="submit"]:hover {
+.contact .prospect-form button[type="submit"]:hover {
   background: #0a22f6;
 }
 

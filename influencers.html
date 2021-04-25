@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Hashtok - Influencer Marketing Platform</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Hashtok - Influencers</title>
+    <style> 
+      body {
+        font-family: 'Roboto', sans-serif !important;
+      }
+      .lds-ripple {
+        display: block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+      }
+      .lds-ripple div {
+        position: absolute;
+        border: 4px solid #8C13FB;
+        opacity: 1;
+        border-radius: 50%;
+        animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+      }
+      .lds-ripple div:nth-child(2) {
+        animation-delay: -0.5s;
+      }
+      @keyframes lds-ripple {
+        0% {
+          top: 36px;
+          left: 36px;
+          width: 0;
+          height: 0;
+          opacity: 1;
+        }
+        100% {
+          top: 0px;
+          left: 0px;
+          width: 72px;
+          height: 72px;
+          opacity: 0;
+        }
+      }
+
+      .alert{
+        display:none;
+      }
+      .border-gradient { 
+          width: 400px; 
+          border: 3px solid transparent; 
+          /* border-image: linear-gradient(to right, #c2e59c, #64b3f4); */
+          border-image: linear-gradient(to top right, #8C13FB, #F6DF0F, #FB0184, #35E2F2);
+          border-image-slice: 1; 
+          padding: 25px; 
+      }
+      .metric-text {
+        font-size: 1.1rem;
+        color: #6941F5;
+      }
+      .mini-title {
+        font-size: 0.8rem;
+      }
+      .mini-title::before {
+        content: '\A';
+        white-space: pre;
+      }
+      .gradient-button {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: #FFF;
+        width: 150px;
+        height: 38px;
+        border:none;
+        cursor: pointer;
+        font-weight: 900;
+        border-radius: 2px;
+      }
+
+      .gb-1{
+        width: 80px;
+        background-image: linear-gradient(to right, #4CB8C4 0%, #3CD3AD 51%, #4CB8C4 100%);
+      }
+      
+      .gb-2{
+        background-image: linear-gradient(to right, #36D1DC 0%, #5B86E5 51%, #36D1DC 100%);
+      }
+  </style> 
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color:black !important">
+        <a class="navbar-brand" href="/influencers.html">
+            <img src="assets/img/hashtok-logo-small.png" height="25" class="d-inline-block align-top" alt="" loading="lazy">
+            <span>Hashtok Influencers</span>
+        </a>
+        
+        <li class="nav-item ml-auto">
+            <a href="/#contact"><button class="btn btn-primary btn-sm mt-1">Contact</button></a>
+          </li>
+    </nav>
+    <div class="container pt-5">
+        <form class="form-inline mt-2 mx-auto" style="width: 20rem;" onsubmit="return false;">
+          <input id="ig-username-input" class="form-control mr-3" style="width: 14rem;" type="search" placeholder="Instagram Username" aria-label="Search" required=true autocapitalize="false" autocomplete="false">
+          <button id="search-submit" class="gradient-button gb-1" type="button">Search</button>
+        </form>
+        <div id="search-loader" class="lds-ripple my-5 mx-auto" style="display: none;"><div></div><div></div></div>
+        <div class="alert alert-danger alert-dismissible text-center fade show my-5 mx-auto px-1" role="alert" style="display: none; max-width: 30rem;">
+          <strong id="alert-text"></strong>
+        </div>
+        <div class="row justify-content-around" id="influencers">
+            
+        </div>
+        <div id="ig-card" class="card mx-auto border-gradient pb-0" style="display: none; width: 20rem;  margin-top: 6rem; margin-bottom: 2rem;">
+          <img id="ig-profile-image" src="" class="card-img-top rounded-circle mx-auto" style="position:absolute; width:8rem; height:8rem; top:-4rem; left:6rem; z-index: 10;" alt="Instagram Profile Image">
+          <div class="card-body text-center pb-0">
+            <h6 id="ig-username" class="text-secondary" style="margin-top:1.5rem;"></h6>
+            <h4 id="ig-full-name" class="card-title font-weight-bold" style="margin-top:2rem;"></h4>
+            <!-- <h6 id="ig-profile-bio" class="card-text rounded" style="font-size:0.9rem; color: #4f4f4f"></h6> -->
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item border-top">
+              <div class="row text-center">
+                <div class="col-6 px-2">
+                  <span id="ig-followers-count" class="font-weight-bold metric-text"></span>
+                  <span class="text-secondary mini-title">Followers</span>
+                </div>
+                <div class="col-6 px-2">
+                  <span id="ig-total-posts" class="font-weight-bold metric-text"></span>
+                  <span class="text-secondary mini-title">Total Posts</span>
+                </div>
+                <div class="col-6 pt-3 px-2">
+                  <span id="ig-eng-ratio" class="font-weight-bold metric-text"></span>
+                  <span class="text-secondary mini-title">Engagement Ratio</span>
+                </div>
+                <div class="col-6 pt-3 px-2">
+                  <span id="ig-average-likes" class="font-weight-bold metric-text"></span>
+                  <span class="text-secondary mini-title">Avg. Likes</span>
+                </div>
+                <div class="col-6 pt-3 px-2">
+                  <span id="ig-average-comments" class="font-weight-bold metric-text"></span>
+                  <span class="text-secondary mini-title">Avg. Comments</span>
+                </div>
+                <div class="col-6 pt-3 px-2">
+                  <span id="ig-average-video-views" class="font-weight-bold metric-text"></span>
+                  <span class="text-secondary mini-title">Avg. Video Views</span>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item text-center px-0">
+              <div id="ig-top-content" class="row"></div>
+            </li>
+            <li class="list-group-item text-center">
+              <a href="https://hashtok.typeform.com/to/wNwzikLt"><button class="gradient-button gb-2 my-2">Join Hashtok</button></a>
+            </li>
+          </ul>
+          <!-- <div class="card-body">
+            
+          </div> -->
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="/assets/js/airtable.browser.js"></script>
+    <script>
+        var Airtable = require('airtable');
+        // Get a base ID for an instance of art gallery example
+        var base = new Airtable({ apiKey: 'keyO0pE1ZPCxvnQ8K' }).base('app2P6ossMwzytGfj');
+
+        var loadArtists = function() {
+            // $('#artists').empty();
+
+            base('influencers').select({
+                sort: [
+                    {field: 'followers', direction: 'desc'}
+                ]
+            }).eachPage(function page(records, fetchNextPage) {
+                records.forEach(function(record) {
+                    const handle = record.get('handle')
+                    const name = record.get('name')
+                    const image_src = record.get('image')[0].url
+                    const followers = record.get('followers')
+                    const engagement = record.get('engagement')
+                    const categories = record.get('categories')
+                    $('#influencers').append(`
+                    <div id="ig-card" class="card mx-auto border-gradient pb-0" style="width: 16rem;  margin-top: 6rem; margin-bottom: 2rem;">
+                        <img id="ig-profile-image" src="${image_src}" class="card-img-top rounded-circle mx-auto" style="position:absolute; width:8rem; height:8rem; top:-4rem; left:4rem; z-index: 10;" alt="Instagram Profile Image">
+                        <div class="card-body text-center pb-0">
+                            <h6 id="ig-username" class="text-secondary" style="margin-top:1.5rem;">@${handle}</h6>
+                            <h4 id="ig-full-name" class="card-title font-weight-bold" style="margin-top:1rem;">${name}</h4>
+                            <!-- <h6 id="ig-profile-bio" class="card-text rounded" style="font-size:0.9rem; color: #4f4f4f"></h6> -->
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item border-top">
+                                <div class="row text-center">
+                                    <div class="col-6 px-2">
+                                        <span id="ig-followers-count" class="font-weight-bold metric-text">${followers}</span>
+                                        <span class="text-secondary mini-title">Followers</span>
+                                    </div>
+                                    <div class="col-6 px-2">
+                                        <span id="ig-eng-ratio" class="font-weight-bold metric-text">${engagement || 0} %</span>
+                                        <span class="text-secondary mini-title">Engagement</span>
+                                    </div>
+                                    <div class="col-12 pt-3 px-2">
+                                        ${categories.map(category => `<span class="badge badge-pill badge-sm badge-success">${category}</span>`)}
+                                        <span class="text-secondary mini-title">Categories</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>`);
+                });
+                fetchNextPage();
+            }, function done(error) {
+                console.log(error);
+            });
+        };
+
+        loadArtists();
+
+    </script>
+</body>
+</html>
