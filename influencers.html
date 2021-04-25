@@ -24,6 +24,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <title>Hashtok - Influencers</title>
     <style> 
       body {
@@ -106,6 +107,10 @@
       .gb-2{
         background-image: linear-gradient(to right, #36D1DC 0%, #5B86E5 51%, #36D1DC 100%);
       }
+
+      .category-select {
+        width: 150px;
+      }
   </style> 
   </head>
   <body>
@@ -114,17 +119,26 @@
             <img src="assets/img/hashtok-logo-small.png" height="25" class="d-inline-block align-top" alt="" loading="lazy">
             <span>Hashtok Influencers</span>
         </a>
-        
-        <li class="nav-item ml-auto">
-            <a href="/#contact"><button class="btn btn-primary btn-sm mt-1">Contact</button></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active mr-3">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item mr-1">
+              <a href="/#contact"><button class="btn btn-primary btn-sm mt-1">Contact Us</button></a>
           </li>
+          </ul>
+      </div>
     </nav>
     <div class="container pt-5">
-        <form class="form-inline mt-2 mx-auto" style="width: 20rem;" onsubmit="return false;">
-          <input id="ig-username-input" class="form-control mr-3" style="width: 14rem;" type="search" placeholder="Instagram Username" aria-label="Search" required=true autocapitalize="false" autocomplete="false">
-          <button id="search-submit" class="gradient-button gb-1" type="button">Search</button>
-        </form>
-        <div id="search-loader" class="lds-ripple my-5 mx-auto" style="display: none;"><div></div><div></div></div>
+        <div class="text-center">
+          <label for="category">Category&ensp;</label>
+          <select id="category" class="category-select"></select> 
+        </div>
+        <div id="search-loader" class="lds-ripple my-5 mx-auto"><div></div><div></div></div>
         <div class="alert alert-danger alert-dismissible text-center fade show my-5 mx-auto px-1" role="alert" style="display: none; max-width: 30rem;">
           <strong id="alert-text"></strong>
         </div>
@@ -184,24 +198,32 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/assets/js/airtable.browser.js"></script>
     <script>
         var Airtable = require('airtable');
         // Get a base ID for an instance of art gallery example
         var base = new Airtable({ apiKey: 'keyO0pE1ZPCxvnQ8K' }).base('app2P6ossMwzytGfj');
 
-        var loadArtists = function() {
-            // $('#artists').empty();
+        function generateFilterWhereField(field, data){
+            return `AND({status} = "active", FIND("${data}",${field}))`
+        }
 
-            base('influencers').select({
-                sort: [
-                    {field: 'followers', direction: 'desc'}
-                ]
-            }).eachPage(function page(records, fetchNextPage) {
+        var loadInfluencers = function(category) {
+            let options = {}
+            options.sort = [
+                {field: 'followers', direction: 'desc'}
+            ]
+            options.filterByFormula = `({status} = "active")`
+            if(category !== "0"){
+              options.filterByFormula = generateFilterWhereField('categories_link', category)
+            }
+            $('#influencers').empty();
+            base('influencers').select(options).eachPage(function page(records, fetchNextPage) {
                 records.forEach(function(record) {
                     const handle = record.get('handle')
                     const name = record.get('name')
-                    const image_src = record.get('image')[0].url
+                    const image_src = record.get('image')[0].thumbnails.large.url
                     const followers = record.get('followers')
                     const engagement = record.get('engagement')
                     const categories = record.get('categories')
@@ -225,8 +247,8 @@
                                         <span class="text-secondary mini-title">Engagement</span>
                                     </div>
                                     <div class="col-12 pt-3 px-2">
-                                        ${categories.map(category => `<span class="badge badge-pill badge-sm badge-success">${category}</span>`)}
-                                        <span class="text-secondary mini-title">Categories</span>
+                                        ${categories.map(category => `<span class="badge badge-pill badge-sm badge-light">${category}</span>`).join(" ")}
+                                        <!-- <span class="text-secondary mini-title">Categories</span> -->
                                     </div>
                                 </div>
                             </li>
@@ -235,11 +257,44 @@
                 });
                 fetchNextPage();
             }, function done(error) {
-                console.log(error);
+              if(error){
+                influencers
+              }
+              $("#search-loader").hide()
             });
         };
 
-        loadArtists();
+        var getCategories = async function() {
+          return new Promise((resolve, reject)=>{
+            let categories = [{id:0, text: "Any"}]
+            base('categories').select({
+            }).eachPage(function page(records, fetchNextPage) {
+                records.forEach(function(record) {
+                  categories.push({id:  record.get('title'), text: record.get('title')})
+                });
+                fetchNextPage();
+            }, function done(error) {
+              if(error){
+                influencers
+              }
+              resolve(categories)
+            });
+          })
+        }
+        
+        $(document).ready(async function() {
+          const categories = await getCategories()
+          $('.category-select').select2({
+            data: categories
+          });
+          const category = $('#category').val()
+          loadInfluencers(category);
+        });
+
+        $(".category-select").on('change', function() {
+          $("#search-loader").show()
+          loadInfluencers(this.value);
+        })
 
     </script>
 </body>
