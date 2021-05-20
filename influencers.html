@@ -107,6 +107,22 @@
       .gb-2{
         background-image: linear-gradient(to right, #36D1DC 0%, #5B86E5 51%, #36D1DC 100%);
       }
+      
+      .category-search-hero {
+        position: relative;
+        height: 150px;
+        background: #eb01a5;
+        background-image: linear-gradient(to left, #F6DF0F, #FB0184);
+      }
+
+      .category-search-box {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
 
       .category-select {
         width: 150px;
@@ -133,11 +149,13 @@
           </ul>
       </div>
     </nav>
-    <div class="container pt-5">
-        <div class="text-center">
-          <label for="category">Category&ensp;</label>
-          <select id="category" class="category-select"></select> 
-        </div>
+    <div class="category-search-hero text-center">
+      <div class="category-search-box">
+        <label for="category" class="text-white"><h4>Category&ensp;</h4></label>
+        <select id="category" class="category-select"></select> 
+      </div>
+    </div>
+    <div class="container">
         <div id="search-loader" class="lds-ripple my-5 mx-auto"><div></div><div></div></div>
         <div class="alert alert-danger alert-dismissible text-center fade show my-5 mx-auto px-1" role="alert" style="display: none; max-width: 30rem;">
           <strong id="alert-text"></strong>
